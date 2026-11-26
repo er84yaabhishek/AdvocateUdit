@@ -11,9 +11,9 @@ export const site = {
   court: 'District & Sessions Court, Meerut',
   city: 'Meerut, Uttar Pradesh',
 
-  // TODO: replace with the real mobile number (country code ke saath, bina + ya spaces)
-  phone: '919000000000',
-  phoneDisplay: '+91 90000 00000',
+  // WhatsApp/call number — country code ke saath, bina + ya spaces
+  phone: '917505053715',
+  phoneDisplay: '+91 75050 53715',
 
   // TODO: replace with the real email
   email: 'udit.chaurasia@example.com',
