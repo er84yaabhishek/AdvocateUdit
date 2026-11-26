@@ -12,8 +12,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      // GitHub Pages URL. Workflow me override hota hai.
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://example.github.io/advocate/',
+      // Production URL. Cloudflare Pages env var se override hota hai.
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://advocateudit.soft84ya.shop/',
     },
   },
 
