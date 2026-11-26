@@ -61,6 +61,28 @@ Repo ka naam `<username>.github.io` ho to URL root ban jayega (`https://<usernam
 
 Domain kharido, repo → Settings → Pages → Custom domain me daalo, aur DNS me CNAME add karo. Code me kuch change nahi karna.
 
+## Custom domain lagana (step by step)
+
+1. Domain kharido (e.g. `uditchaurasia.in`) — kisi bhi registrar se. `.in` domain India me sasta rehta hai, `.com` option bhi hai.
+2. Repo → **Settings → Secrets and variables → Actions → Variables tab → New repository variable**
+   - Name: `CUSTOM_DOMAIN`
+   - Value: `uditchaurasia.in` (bina `https://` aur bina trailing slash)
+3. Registrar ke DNS panel me records add karo:
+
+   | Type | Name | Value |
+   | --- | --- | --- |
+   | A | `@` | `185.199.108.153` |
+   | A | `@` | `185.199.109.153` |
+   | A | `@` | `185.199.110.153` |
+   | A | `@` | `185.199.111.153` |
+   | CNAME | `www` | `er84yaabhishek.github.io` |
+
+   (Apex ke liye `ALIAS`/`ANAME` support ho to `@` → `er84yaabhishek.github.io` bhi chalega.)
+4. Repo → **Settings → Pages → Custom domain** me domain daal kar Save karo. `Enforce HTTPS` tick kar do (certificate 5-30 min me aa jata hai).
+5. `main` par koi bhi push karo — workflow khud base path root kar dega, `CNAME` file bhi bana dega, aur site domain par serve hone lagegi.
+
+Domain change/downgrade karna ho to sirf `CUSTOM_DOMAIN` variable delete kar dena — site wapas `github.io` URL par chalne lagegi.
+
 ## Design notes
 
 - Palette: ink navy, cream, brass — professional legal look

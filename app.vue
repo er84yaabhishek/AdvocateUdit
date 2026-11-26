@@ -5,8 +5,13 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const canonical = new URL(route.path, config.public.siteUrl).toString()
 
+const { initLocale, locale } = useLocale()
+
+onMounted(() => initLocale())
+
 useHead({
   link: [{ rel: 'canonical', href: canonical }],
+  htmlAttrs: { lang: computed(() => (locale.value === 'hi' ? 'hi' : 'en')) },
   script: [
     {
       type: 'application/ld+json',

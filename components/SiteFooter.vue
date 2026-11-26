@@ -2,12 +2,15 @@
 import { site, waLink } from '~/data/site'
 import { MapPin, Phone, Mail, Clock, Scale, ArrowUpRight } from '@lucide/vue'
 
+const { t } = useLocale()
 const year = new Date().getFullYear()
 </script>
 
 <template>
   <footer class="mt-24 border-t border-ink/10 bg-ink text-cream/80">
-    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8">
+    <div
+      class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8"
+    >
       <div>
         <div class="flex items-center gap-3">
           <span class="grid size-10 place-items-center rounded-sm bg-cream/10 text-cream">
@@ -16,27 +19,39 @@ const year = new Date().getFullYear()
           <span class="font-serif text-lg text-cream">{{ site.name }}</span>
         </div>
         <p class="mt-4 max-w-sm text-sm leading-relaxed text-cream/65">
-          {{ site.tagline }} — {{ site.court }}. Criminal defence, bail aur trial matters.
+          {{ site.tagline }} — {{ site.court }}. {{ t.footer.blurb }}
         </p>
         <p class="mt-4 text-xs leading-relaxed text-cream/45">
-          Bar Council enrolment: {{ site.enrolment }}
+          {{ t.footer.enrolment }}: {{ site.enrolment }}
         </p>
       </div>
 
       <div>
-        <h2 class="text-xs font-semibold tracking-[0.16em] text-cream/50 uppercase">Pages</h2>
+        <h2 class="text-xs font-semibold tracking-[0.16em] text-cream/50 uppercase">
+          {{ t.footer.pages }}
+        </h2>
         <ul class="mt-4 space-y-2.5 text-sm">
-          <li><NuxtLink to="/" class="hover:text-cream">Home</NuxtLink></li>
-          <li><NuxtLink to="/about" class="hover:text-cream">About</NuxtLink></li>
           <li>
-            <NuxtLink to="/practice-areas" class="hover:text-cream">Practice Areas</NuxtLink>
+            <NuxtLink to="/" class="hover:text-cream">{{ t.nav.home }}</NuxtLink>
           </li>
-          <li><NuxtLink to="/contact" class="hover:text-cream">Contact</NuxtLink></li>
+          <li>
+            <NuxtLink to="/about" class="hover:text-cream">{{ t.nav.about }}</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/practice-areas" class="hover:text-cream">
+              {{ t.nav.practiceAreas }}
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/contact" class="hover:text-cream">{{ t.nav.contact }}</NuxtLink>
+          </li>
         </ul>
       </div>
 
       <div>
-        <h2 class="text-xs font-semibold tracking-[0.16em] text-cream/50 uppercase">Contact</h2>
+        <h2 class="text-xs font-semibold tracking-[0.16em] text-cream/50 uppercase">
+          {{ t.footer.contact }}
+        </h2>
         <ul class="mt-4 space-y-3 text-sm">
           <li class="flex gap-2.5">
             <Phone :size="16" class="mt-0.5 shrink-0 text-brass-soft" aria-hidden="true" />
@@ -44,9 +59,9 @@ const year = new Date().getFullYear()
           </li>
           <li class="flex gap-2.5">
             <Mail :size="16" class="mt-0.5 shrink-0 text-brass-soft" aria-hidden="true" />
-            <a :href="`mailto:${site.email}`" class="break-all hover:text-cream">{{
-              site.email
-            }}</a>
+            <a :href="`mailto:${site.email}`" class="break-all hover:text-cream">
+              {{ site.email }}
+            </a>
           </li>
           <li class="flex gap-2.5">
             <MapPin :size="16" class="mt-0.5 shrink-0 text-brass-soft" aria-hidden="true" />
@@ -63,7 +78,7 @@ const year = new Date().getFullYear()
               rel="noopener"
               class="inline-flex items-center gap-1 text-brass-soft hover:text-cream"
             >
-              WhatsApp <ArrowUpRight :size="14" aria-hidden="true" />
+              {{ t.footer.whatsapp }} <ArrowUpRight :size="14" aria-hidden="true" />
             </a>
           </li>
         </ul>
@@ -74,11 +89,8 @@ const year = new Date().getFullYear()
       <div
         class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-cream/45 sm:px-6 md:flex-row md:items-center md:justify-between"
       >
-        <p>© {{ year }} {{ site.name }}, Advocate. All rights reserved.</p>
-        <p>
-          This website is for informational purposes only and does not constitute legal advice or
-          solicitation.
-        </p>
+        <p>© {{ year }} {{ site.name }}, Advocate. {{ t.footer.rights }}</p>
+        <p>{{ t.footer.disclaimer }}</p>
       </div>
     </div>
   </footer>

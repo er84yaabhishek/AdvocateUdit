@@ -2,6 +2,8 @@
 import { site, waLink } from '~/data/site'
 import { Phone, Mail, MapPin, Clock, MessageCircle, ArrowUpRight } from '@lucide/vue'
 
+const { t } = useLocale()
+
 useSeoMeta({
   title: 'Contact',
   description:
@@ -9,22 +11,21 @@ useSeoMeta({
 })
 
 const mapSrc = computed(
-  () =>
-    `https://www.google.com/maps?q=${encodeURIComponent(site.address.mapQuery)}&output=embed`,
+  () => `https://www.google.com/maps?q=${encodeURIComponent(site.address.mapQuery)}&output=embed`,
 )
 
 const rows = computed(() => [
   {
     icon: Phone,
-    label: 'Phone',
+    label: t.value.contact.labels.phone,
     value: site.phoneDisplay,
     href: `tel:+${site.phone}`,
   },
-  { icon: Mail, label: 'Email', value: site.email, href: `mailto:${site.email}` },
+  { icon: Mail, label: t.value.contact.labels.email, value: site.email, href: `mailto:${site.email}` },
   {
     icon: MessageCircle,
-    label: 'WhatsApp',
-    value: 'Chat par message karein',
+    label: t.value.contact.labels.whatsapp,
+    value: t.value.contact.whatsappValue,
     href: waLink,
     external: true,
   },
@@ -34,9 +35,9 @@ const rows = computed(() => [
 <template>
   <main>
     <PageHero
-      eyebrow="Contact"
-      title="Baat karein — consultation ke liye."
-      intro="Phone ya WhatsApp par situation bata kar pehli salah lein. Documents ke saath milne ke liye chamber me time fix kar sakte hain."
+      :eyebrow="t.contact.eyebrow"
+      :title="t.contact.title"
+      :intro="t.contact.intro"
     />
 
     <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
@@ -44,7 +45,7 @@ const rows = computed(() => [
         <!-- Details -->
         <div>
           <div class="rounded-sm border border-ink/10 bg-white/70 p-6 shadow-card sm:p-8">
-            <h2 class="eyebrow">Direct</h2>
+            <h2 class="eyebrow">{{ t.contact.directHeading }}</h2>
             <ul class="mt-5 divide-y divide-ink/10">
               <li v-for="r in rows" :key="r.label">
                 <a
@@ -60,10 +61,9 @@ const rows = computed(() => [
                     <component :is="r.icon" :size="18" :stroke-width="1.7" />
                   </span>
                   <span class="min-w-0">
-                    <span
-                      class="block text-[0.68rem] tracking-[0.14em] text-slate-ink uppercase"
-                      >{{ r.label }}</span
-                    >
+                    <span class="block text-[0.68rem] tracking-[0.14em] text-slate-ink uppercase">
+                      {{ r.label }}
+                    </span>
                     <span class="block truncate font-medium text-ink">{{ r.value }}</span>
                   </span>
                   <ArrowUpRight
@@ -79,7 +79,9 @@ const rows = computed(() => [
               <div class="flex gap-3">
                 <MapPin :size="17" class="mt-0.5 shrink-0 text-brass" aria-hidden="true" />
                 <div>
-                  <p class="text-[0.68rem] tracking-[0.14em] text-slate-ink uppercase">Chamber</p>
+                  <p class="text-[0.68rem] tracking-[0.14em] text-slate-ink uppercase">
+                    {{ t.contact.chamberLabel }}
+                  </p>
                   <p class="mt-1 text-sm leading-relaxed text-ink">
                     {{ site.address.line1 }}<br />{{ site.address.line2 }}
                   </p>
@@ -88,11 +90,11 @@ const rows = computed(() => [
               <div class="flex gap-3">
                 <Clock :size="17" class="mt-0.5 shrink-0 text-brass" aria-hidden="true" />
                 <div>
-                  <p class="text-[0.68rem] tracking-[0.14em] text-slate-ink uppercase">Timings</p>
-                  <p class="mt-1 text-sm text-ink">{{ site.consultation }}</p>
-                  <p class="mt-1 text-xs text-slate-ink">
-                    Court hearing ke din availability alag ho sakti hai — pehle call karein.
+                  <p class="text-[0.68rem] tracking-[0.14em] text-slate-ink uppercase">
+                    {{ t.contact.timingsLabel }}
                   </p>
+                  <p class="mt-1 text-sm text-ink">{{ site.consultation }}</p>
+                  <p class="mt-1 text-xs text-slate-ink">{{ t.contact.timingsNote }}</p>
                 </div>
               </div>
             </div>
@@ -100,8 +102,8 @@ const rows = computed(() => [
 
           <div class="mt-4 rounded-sm border border-brass/30 bg-sand/40 p-5">
             <p class="text-sm leading-relaxed text-ink">
-              <strong class="font-semibold">Emergency / arrest:</strong> ho sake to turant call
-              karein aur FIR ya notice ki photo WhatsApp par bhejein.
+              <strong class="font-semibold">{{ t.contact.emergencyLabel }}</strong>
+              {{ t.contact.emergencyText }}
             </p>
           </div>
         </div>
@@ -111,36 +113,34 @@ const rows = computed(() => [
           <div class="overflow-hidden rounded-sm border border-ink/10 bg-white/70 shadow-card">
             <iframe
               :src="mapSrc"
-              title="Chamber location map"
+              :title="t.contact.mapTitle"
               class="h-[320px] w-full border-0 sm:h-[420px]"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             />
             <div class="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 p-4">
-              <p class="text-sm text-slate-ink">Meerut, Uttar Pradesh</p>
+              <p class="text-sm text-slate-ink">{{ t.contact.mapCaption }}</p>
               <a
                 :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.mapQuery)}`"
                 target="_blank"
                 rel="noopener"
                 class="inline-flex items-center gap-1.5 text-sm font-semibold text-brass hover:text-ink"
               >
-                Directions
+                {{ t.contact.directions }}
                 <ArrowUpRight :size="14" aria-hidden="true" />
               </a>
             </div>
           </div>
 
           <div class="mt-4 rounded-sm border border-ink/10 bg-white/70 p-6">
-            <h2 class="font-serif text-lg font-semibold text-ink">Consultation ke liye kya laayein</h2>
+            <h2 class="font-serif text-lg font-semibold text-ink">
+              {{ t.contact.bringTitle }}
+            </h2>
             <ul class="mt-3 space-y-2 text-sm leading-relaxed text-slate-ink">
-              <li>FIR copy / notice / summons (photo ya PDF)</li>
-              <li>Pehle ke court orders, agar koi hain</li>
-              <li>Cheque, agreement, messages ya call records — matter ke hisaab se</li>
-              <li>ID proof</li>
+              <li v-for="b in t.contact.bring" :key="b">{{ b }}</li>
             </ul>
             <p class="mt-4 text-xs leading-relaxed text-slate-ink/80">
-              Website par form se details na bhejein — pehli baat-cheet phone ya WhatsApp par hi
-              rakhein.
+              {{ t.contact.formNote }}
             </p>
           </div>
         </div>

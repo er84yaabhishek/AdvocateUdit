@@ -5,16 +5,14 @@
       <section class="mx-auto max-w-3xl px-4 py-24 sm:px-6">
         <p class="eyebrow">Error {{ error?.statusCode || 404 }}</p>
         <h1 class="display mt-4 text-3xl text-ink sm:text-4xl">
-          {{ error?.statusCode === 404 ? 'Ye page nahi mila.' : 'Kuch galat ho gaya.' }}
+          {{ error?.statusCode === 404 ? t.error.notFoundTitle : t.error.genericTitle }}
         </h1>
-        <p class="mt-4 text-sm leading-relaxed text-slate-ink">
-          Aap jo page dhoond rahe hain wo hata diya gaya hai ya address galat hai.
-        </p>
+        <p class="mt-4 text-sm leading-relaxed text-slate-ink">{{ t.error.body }}</p>
         <NuxtLink
           to="/"
           class="mt-8 inline-flex rounded-sm bg-ink px-5 py-3 text-sm font-semibold text-cream transition hover:bg-ink-soft"
         >
-          Home par wapas jaayein
+          {{ t.error.home }}
         </NuxtLink>
       </section>
     </main>
@@ -27,5 +25,7 @@ import type { NuxtError } from '#app'
 
 defineProps<{ error: NuxtError }>()
 
-useSeoMeta({ title: 'Page not found' })
+const { t } = useLocale()
+
+useSeoMeta({ title: t.value.error.metaTitle })
 </script>
